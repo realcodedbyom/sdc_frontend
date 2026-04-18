@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDC – Software Development Cell | DSVV</title>
+    <meta name="description"
+        content="Software Development Cell – Department of Computer Science. Access all department applications from one centralized portal.">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ── Base reset ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #2563EB;
+            --blue-dark: #1E3A8A;
+            --blue-light: #DBEAFE;
+            --yellow: #FACC15;
+            --yellow-dark: #D97706;
+            --bg: #F1F5F9;
+            --white: #FFFFFF;
+            --text: #1E293B;
+            --muted: #64748B;
+            --border: rgba(37, 99, 235, 0.12);
+            --card-shadow: 0 4px 24px rgba(30, 58, 138, 0.09);
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-top: 80px;
+            /* offset for navbar */
+        }
+
+        /* ── Navbar ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.10);
+            box-shadow: 0 2px 16px rgba(30, 58, 138, 0.07);
+        }
+
+        .navbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+    .nav-brand img {
+    height: 56px;      /* controlled height (navbar friendly) */
+    width: auto;       /* keep original ratio (no stretch) */
+    object-fit: contain;
+    display: block;    /* removes extra spacing issues */
+}
+        .nav-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .nav-brand-title {
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--blue-dark);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-link {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--blue-dark);
+            text-decoration: none;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .nav-cta {
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--blue-dark);
+            background: linear-gradient(135deg, var(--yellow) 0%, #FCD34D 100%);
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(250, 204, 21, 0.5);
+        }
+
+        /* ── Applications section ── */
+        .section {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: var(--mono);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .section-sub {
+            font-family: var(--mono);
+            font-size: 1.40rem;
+            color: var(--muted);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* ── App cards ── */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .app-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue) 0%, var(--yellow) 100%);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .app-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(30, 58, 138, 0.14);
+        }
+
+        .app-icon-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--yellow);
+            margin-bottom: 1.2rem;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+        }
+
+        .app-card h3 {
+            font-family: var(--mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .app-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 1.6rem;
+        }
+
+        .app-link {
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            border: 2px solid var(--blue);
+            transition: all 0.25s;
+        }
+
+        .app-link:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        /* ── Simple Footer ── */
+        .site-footer {
+            background: var(--blue-dark);
+            color: #e2e8f0;
+            margin-top: auto;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .site-footer h4 {
+            font-family: var(--mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .site-footer p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .site-footer .footer-bottom {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .navbar-inner {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+   <!-- ── Navbar ── -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="/" class="nav-brand">
+            
+            <!-- Logo -->
+            <img src="http://192.160.108.56:5001/static/logo/a893cf14_sdc-logo-white-bg.png" 
+                 alt="DSVV Logo" 
+                 style="height:56px; width:auto; object-fit:contain; display:block;">
+
+            <!-- Text 
+            <div class="nav-brand-text">
+                <span class="nav-brand-title">Software Development Cell</span>
+                <span class="nav-brand-sub">Dev Sanskriti Vishwavidyalaya</span>
+            </div>-->
+
+        </a>
+    </div>
+</nav>
+
+    <!-- ── Applications section ── -->
+    <section class="section" id="applications">
+        <div class="section-header">
+            <h2 class="section-title">PROJECTS</h2>
+            <p class="section-sub">
+                DEVELOPED BY SDC MEMBERS AND STUDENTS TEAM
+            </p>
+        </div>
+
+        <div class="apps-grid">
+            
+            <a href="/quiz" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-brain"></i>
+                    
+                </div>
+                <h3>Quiz Master</h3>
+                <p>Online quiz management system with participant tracking.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="/announcement" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>CS-Connect</h3>
+                <p>Send announcements and notifications to students and staff.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:5006/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-calendar-alt"></i>
+                    
+                </div>
+                <h3>Event Management System</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="https://cie-tracker.onrender.com/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>CIE Faculty Portal</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="https://cie-tracker-cs-dsvv.netlify.app/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>CIE Status Tracker</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:5175/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>SDC Website</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:5176/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>Student Clubs News &amp; Events Page</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:5174/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>CS-News Portal</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:5173/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>Alumni Speaks Events</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="https://dsvv-cs-timetable-sdc.vercel.app/" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>CS-Timetable-Page</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="http://192.160.108.56:3000" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>Student Event Attendance System</h3>
+                <p>Manage events, registrations, certificates and reports.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="/lan-file-share" class="app-card" target="_blank" style="text-decoration: none; display: block;">
+                <div class="app-icon-wrap">
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    
+                </div>
+                <h3>LAN File Share</h3>
+                <p>Share files easily over your local network with upload, download, and delete options.</p>
+                <div class="app-link" style="display: inline-flex; margin-top: auto;">
+                    Open Application &nbsp;<i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+        </div>
+    </section>
+
+    <!-- ── Simple Footer ── -->
+    <footer class="site-footer">
+        <h4><i class="fas fa-code"></i> &nbsp;Software Development Cell</h4>
+        <p>Innovating technology solutions for academic excellence at DSVV.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Software Development Cell – Department of Computer Science. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" class="bg-background">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Software Development Cell · Dev Sanskriti Vishwavidyalaya</title>
+    <meta
+      name="description"
+      content="The Software Development Cell (SDC), Department of Computer Science, Dev Sanskriti Vishwavidyalaya — building campus apps and tools."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar" role="banner">
+      <div class="container nav-inner">
+        <a href="#" class="brand" aria-label="Software Development Cell home">
+          <img
+            src="http://192.160.108.56:5001/static/logo/a893cf14_sdc-logo-white-bg.png"
+            alt="Software Development Cell — Dev Sanskriti Vishwavidyalaya"
+            class="brand-logo"
+          />
+        </a>
+
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#projects">Projects</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="mailto:sdc@dsvv.ac.in" class="btn btn-accent" aria-label="Contact SDC">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            <span>Contact SDC</span>
+          </a>
+          <button class="btn-icon menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- <div class="mobile-menu" id="mobileMenu" hidden>
+        <a href="#projects">Projects</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header> -->
+
+    <main>
+      <!-- PROJECTS -->
+      <section id="projects" class="section projects">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow"><span class="dot-live"></span>// projects</span>
+              <h2 class="h2">Campus apps, built in-house.</h2>
+              <p class="lead">
+                A living catalogue of tools shipped by the Software Development Cell — used by students,
+                faculty and staff across the university.
+              </p>
+            </div>
+
+            <div class="toolbar">
+              <div class="search">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input id="searchInput" type="search" placeholder="Search projects, tags…" aria-label="Search projects" />
+              </div>
+
+              <div class="filters" id="filters" role="tablist" aria-label="Filter by category">
+                <button class="chip is-active" data-filter="All" role="tab" aria-selected="true">All</button>
+                <button class="chip" data-filter="Academics" role="tab">Academics</button>
+                <button class="chip" data-filter="Events" role="tab">Events</button>
+                <button class="chip" data-filter="Communication" role="tab">Communication</button>
+                <button class="chip" data-filter="Web" role="tab">Web</button>
+                <button class="chip" data-filter="Utilities" role="tab">Utilities</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid" id="projectGrid"></div>
+
+          <p class="empty" id="emptyState" hidden>No projects match your filters.</p>
+        </div>
+      </section>
+
+      <!-- CTA / JOIN -->
+      <section id="team" class="section cta">
+        <div class="container cta-inner">
+          <div class="cta-copy">
+            <span class="eyebrow on-dark">// join the cell</span>
+            <h2 class="h2 on-dark">
+              We&apos;re looking for curious builders.
+            </h2>
+            <p class="lead on-dark">
+              If you love shipping things people actually use, you&apos;ll feel at home at SDC. We write
+              code, break things, fix them, and then do it all again tomorrow.
+            </p>
+            <div class="cta-actions">
+              <a href="mailto:sdc@dsvv.ac.in?subject=Apply%20to%20join%20SDC" class="btn btn-accent btn-lg">
+                Apply to join
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="cta-card" aria-hidden="true">
+            <div class="cta-card-head">
+              <span class="traffic r"></span><span class="traffic y"></span><span class="traffic g"></span>
+              <span class="cta-card-title">apply.sh</span>
+            </div>
+            <pre class="cta-card-body"><span class="sel">$</span> curl -sSL sdc.dsvv.ac.in/apply
+<span class="mut"># You&apos;ll be asked:</span>
+  • what you&apos;re learning
+  • something you&apos;ve built
+  • a problem you&apos;d love to fix on campus
+<span class="ok">✓</span> that&apos;s it. no gatekeeping.</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="footer" role="contentinfo">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="http://192.160.108.56:5001/static/logo/a893cf14_sdc-logo-white-bg.png" alt="Software Development Cell — Dev Sanskriti Vishwavidyalaya" />
+          </div>
+          <p class="footer-desc">
+            The in-house software team of the Department of Computer Science — building apps, tools
+            and utilities for the DSVV community.
+          </p>
+          <div class="footer-meta">
+            <a href="mailto:sdc@dsvv.ac.in" class="pill">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              sdc@dsvv.ac.in
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-h">Explore</h4>
+          <ul class="footer-list">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#team">Join the cell</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-h">Reach us</h4>
+          <ul class="footer-list">
+            <li class="addr">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Dept. of Computer Science<br/>Dev Sanskriti Vishwavidyalaya,<br/>Haridwar, Uttarakhand</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <div class="container footer-bar-inner">
+          <span>© <span id="year"></span> Software Development Cell, DSVV. All rights reserved.</span>
+          <span class="mono">made with care on campus</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
